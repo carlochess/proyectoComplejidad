@@ -83,7 +83,7 @@ def printMatrix(testMatrix):
     print()
 '''
 
-items = [Item(20, 10), Item(20, 10), Item(20, 10), Item(20, 10),Item(20, 10)]
+items = [Item(20, 10), Item(20, 10), Item(20, 10), Item(20, 10)]
 caneca = Mochila(40, 10)
 n = int(hallarN())
 i = len(items)
