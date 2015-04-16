@@ -18,5 +18,5 @@ def resolver(matriz,numMochilas,numObjetos):
     print "Varibles: ", variables 
     for i in range(numMochilas*numObjetos):
 	   	if variables[i] != 0:
-			print "El objeto ", i%numObjetos, " ira en la maleta ", int(i/numObjetos)
+    		print "El objeto ", i%numObjetos, " ira en la maleta ", int(i/numObjetos)
     #print lpsolve('get_constraints', lp)[0]
