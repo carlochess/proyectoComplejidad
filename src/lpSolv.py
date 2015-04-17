@@ -30,10 +30,10 @@ def resolverParte2(matriz, numMochilas, numObjetos):
             ret = lpsolve('add_constraint', lp, matriz[i][:posicionOperador], LE, matriz[i][posicionOperador + 1])
         else:
             ret = lpsolve('add_constraint', lp, matriz[i][:posicionOperador], EQ, matriz[i][posicionOperador + 1])
-    for i in range(1, posicionOperador + 1):
-	lpsolve('set_binary', lp, i, True)
-    for i in range(numObjetos):
-	lpsolve('set_int', lp, i+posicionOperador + 1, True)
+    for i in range(1, posicionOperador -numMochilas+1):
+		lpsolve('set_binary', lp, i, True)
+    for i in range(posicionOperador-numMochilas+1, posicionOperador+1):
+		lpsolve('set_int', lp, i, True)
     ret = lpsolve('write_lp', lp, 'a.lp')
     lpsolve('solve', lp)
     print "Objetivo: ", lpsolve('get_objective', lp)

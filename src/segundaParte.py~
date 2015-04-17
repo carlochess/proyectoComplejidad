@@ -114,7 +114,7 @@ def printMatrix(testMatrix):
 o = leerArchivo()
 caneca = o[0]
 items=  o[1]
-n = 2#len(items)#int(hallarN())
+n = len(items)#int(hallarN())
 i = len(items)
 funcObj = []
 primeraRestriccion = []
