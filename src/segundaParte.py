@@ -1,4 +1,4 @@
-#from lpSolv import *
+from lpSolv import *
 from lector import *
 
 def generarRestriccionesTipo(matriz, tipo):
@@ -7,7 +7,7 @@ def generarRestriccionesTipo(matriz, tipo):
             restriccionCanecaI = []
             for k in range(0, i * n):
                 if k >= i * j and k < i * j + i:
-                    objPos = k % n
+                    objPos = k % i
                     if tipo == 0:
                         restriccionCanecaI.append(items[objPos].getPeso())
                     elif tipo == 1:
@@ -43,10 +43,10 @@ def generarRestriccionesTipo(matriz, tipo):
             restriccionCanecaI.append(1)
             matriz.append(restriccionCanecaI)
     elif tipo == 3:
-        for j in range(0, i):
+        for j in range(0, n):
             restriccionCanecaI = []
             for k in range(0, i * n):
-                if k >= i * j and k < i * j + n and k < i*n:
+                if k >= i * j and k < i * j + i and k < i*n:
                     restriccionCanecaI.append(items[k% i].getPeso()*(n-1))
                 else:
                     restriccionCanecaI.append(-items[k% i].getPeso())
@@ -63,7 +63,7 @@ def generarRestriccionesTipo(matriz, tipo):
             # Para -a - I
             restriccionCanecaJ = []
             for k in range(0, i * n):
-                if k >= i * j and k < i * j + n and k < i*n:
+                if k >= i * j and k < i * j + i and k < i*n:
                     restriccionCanecaJ.append(-items[k% i].getPeso()*(n-1))
                 else:
                     restriccionCanecaJ.append(items[k% i].getPeso())
@@ -88,8 +88,8 @@ def generarFuncObj(matriz):
     matriz.append(restriccionCanecaI)
 
 def generarRestricciones():
-    generarRestriccionesTipo(primeraRestriccion, 0)
-    generarRestriccionesTipo(segundaRestriccion, 1)
+    generarRestriccionesTipo(primeraRestriccion, 1)
+    generarRestriccionesTipo(segundaRestriccion, 0)
     generarRestriccionesTipo(terceraRestriccion, 2)
     generarRestriccionesTipo(cuartaRestriccion, 3)
 
@@ -135,6 +135,7 @@ for e in terceraRestriccion:
 for e in cuartaRestriccion:
     matriz.append(e)
 print("nObjetos: ", i , ", nCanecas=", n)
+print(items)
 printMatrix(matriz)
-#resolver(matriz,n,i)
+resolverParte2(matriz,n,i)
 
