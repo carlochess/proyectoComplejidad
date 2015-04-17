@@ -1,11 +1,8 @@
 from Item import Item
 from Mochila import Mochila
-<<<<<<< HEAD
 #from lpSolv import *
-=======
-from lpSolv import *
->>>>>>> 7eadea64b388e0d6e73516e6b76d01926ea7bf28
 import math
+from lector import *
 
 def generarRestriccionesTipo(matriz, tipo):
     if tipo == 0 or tipo == 1:
@@ -40,8 +37,8 @@ def generarRestriccionesTipo(matriz, tipo):
     else:
         for j in range(0, i):
             restriccionCanecaI = []
-            for k in range(0, i * n + 2):
-                if k == j or k == j + 4:
+            for k in range(0, i * n+n):
+                if (k % i) -j == 0 and k < i*n:
                     restriccionCanecaI.append(1)
                 else:
                     restriccionCanecaI.append(0)
@@ -86,7 +83,7 @@ def printMatrix(testMatrix):
         print()
     print()
 '''
-<<<<<<< HEAD
+
 def printMatrix(testMatrix):
     for i in range(len(testMatrix)):
         for j in range(len(testMatrix[i])):
@@ -95,15 +92,12 @@ def printMatrix(testMatrix):
     print
 
 
-items = [Item(20, 10), Item(20, 10), Item(20, 10), Item(20, 10),Item(20, 10)]
-caneca = Mochila(40, 10)
+#items = [Item(20, 10), Item(20, 10), Item(20, 10), Item(20, 10),Item(20, 10)]
+#caneca = Mochila(40, 10)
+o = leerArchivo()
+caneca = o[0]
+items=  o[1]
 n = len(items)#int(hallarN())
-=======
-
-items = [Item(20, 10), Item(20, 10), Item(20, 10), Item(20, 10)]
-caneca = Mochila(40, 10)
-n = int(hallarN())
->>>>>>> 7eadea64b388e0d6e73516e6b76d01926ea7bf28
 i = len(items)
 funcObj = []
 primeraRestriccion = []
@@ -120,11 +114,6 @@ for e in segundaRestriccion:
     matriz.append(e)
 for e in terceraRestriccion:
     matriz.append(e)
-<<<<<<< HEAD
 print "nObjetos: ", i , ", nCanecas=", n
 printMatrix(matriz)
-##resolver(matriz,n,i)
-=======
-##printMatrix(matriz)
 resolver(matriz,n,i)
->>>>>>> 7eadea64b388e0d6e73516e6b76d01926ea7bf28

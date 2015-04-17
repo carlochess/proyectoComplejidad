@@ -1,7 +1,8 @@
 from Item import Item
 from Mochila import Mochila
-#from lpSolv import *
+from lpSolv import *
 import math
+from lector import *
 
 def generarRestriccionesTipo(matriz, tipo):
     if tipo == 0 or tipo == 1:
@@ -36,8 +37,8 @@ def generarRestriccionesTipo(matriz, tipo):
     else:
         for j in range(0, i):
             restriccionCanecaI = []
-            for k in range(0, i * n + 2):
-                if k == j or k == j + 4:
+            for k in range(0, i * n+n):
+                if (k % i) -j == 0 and k < i*n:
                     restriccionCanecaI.append(1)
                 else:
                     restriccionCanecaI.append(0)
@@ -91,8 +92,11 @@ def printMatrix(testMatrix):
     print
 
 
-items = [Item(20, 10), Item(20, 10), Item(20, 10), Item(20, 10),Item(20, 10)]
-caneca = Mochila(40, 10)
+#items = [Item(20, 10), Item(20, 10), Item(20, 10), Item(20, 10),Item(20, 10)]
+#caneca = Mochila(40, 10)
+o = leerArchivo()
+caneca = o[0]
+items=  o[1]
 n = len(items)#int(hallarN())
 i = len(items)
 funcObj = []
@@ -112,4 +116,4 @@ for e in terceraRestriccion:
     matriz.append(e)
 print "nObjetos: ", i , ", nCanecas=", n
 printMatrix(matriz)
-##resolver(matriz,n,i)
+resolver(matriz,n,i)
