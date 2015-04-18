@@ -1,6 +1,6 @@
 from Item import Item
 from Mochila import Mochila
-#from lpSolv import *
+from lpSolv import *
 import math
 from lector import *
 
@@ -75,7 +75,7 @@ def generarRestricciones():
 def generarFuncionObjetivo():
     generarFuncObj(funcObj)
 
-
+'''
 def printMatrix(testMatrix):
     for i in range(len(testMatrix)):
         for j in range(len(testMatrix[i])):
@@ -89,14 +89,16 @@ def printMatrix(testMatrix):
             print testMatrix[i][j],
         print
     print
-'''
+
 
 #items = [Item(20, 10), Item(20, 10), Item(20, 10), Item(20, 10),Item(20, 10)]
 #caneca = Mochila(40, 10)
 o = leerArchivo()
 caneca = o[0]
 items=  o[1]
-print(items)
+numeroProblema = o[2]+"_1.lp"
+#print(items)
+print items
 n = len(items)#int(hallarN())
 i = len(items)
 funcObj = []
@@ -114,6 +116,7 @@ for e in segundaRestriccion:
     matriz.append(e)
 for e in terceraRestriccion:
     matriz.append(e)
-print("nObjetos: ", i , ", nCanecas=", n)
+#print("nObjetos: ", i , ", nCanecas=", n)
+print "nObjetos: ", i , ", nCanecas=", n
 printMatrix(matriz)
-#resolver(matriz,n,i)
+resolver(matriz,n,i,numeroProblema)

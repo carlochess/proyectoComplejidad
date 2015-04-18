@@ -114,7 +114,8 @@ def printMatrix(testMatrix):
 o = leerArchivo()
 caneca = o[0]
 items=  o[1]
-n = 2#len(items)#int(hallarN())
+numeroProblema = o[2]+"_2.lp"
+n = len(items)#int(hallarN())
 i = len(items)
 funcObj = []
 primeraRestriccion = []
@@ -137,5 +138,5 @@ for e in cuartaRestriccion:
 print "Items ", items
 print "Caneca ", caneca
 printMatrix(matriz)
-resolverParte2(matriz,n,i)
+resolverParte2(matriz,n,i,numeroProblema)
 

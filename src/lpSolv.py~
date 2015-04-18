@@ -1,5 +1,5 @@
 from lpsolve55 import *
-def resolver(matriz, numMochilas, numObjetos):
+def resolver(matriz, numMochilas, numObjetos,numProblema):
     posicionOperador = len(matriz[1])-2
     lp = lpsolve('make_lp', 0, posicionOperador)
     lpsolve('set_verbose', lp, IMPORTANT)
@@ -11,7 +11,7 @@ def resolver(matriz, numMochilas, numObjetos):
             ret = lpsolve('add_constraint', lp, matriz[i][:posicionOperador], EQ, matriz[i][posicionOperador + 1])
     for i in range(1, posicionOperador + 1):
 	lpsolve('set_binary', lp, i, True)
-    ret = lpsolve('write_lp', lp, 'a.lp')
+    ret = lpsolve('write_lp', lp, 'lp/'+numProblema)
     lpsolve('solve', lp)
     print "Objetivo: ", lpsolve('get_objective', lp)
     variables = lpsolve('get_variables', lp)[0]
@@ -20,7 +20,7 @@ def resolver(matriz, numMochilas, numObjetos):
         if variables[i] != 0:
             print "El objeto ", i % numObjetos, " ira en la maleta ", int(i / numObjetos)
 
-def resolverParte2(matriz, numMochilas, numObjetos):
+def resolverParte2(matriz, numMochilas, numObjetos,numProblema):
     posicionOperador = len(matriz[1])-2
     lp = lpsolve('make_lp', 0, posicionOperador)
     lpsolve('set_verbose', lp, IMPORTANT)
@@ -33,8 +33,8 @@ def resolverParte2(matriz, numMochilas, numObjetos):
     for i in range(1, posicionOperador -numMochilas+1):
 		lpsolve('set_binary', lp, i, True)
     for i in range(posicionOperador-numMochilas+1, posicionOperador+1):
-		lpsolve('set_int', lp, i+, True)
-    ret = lpsolve('write_lp', lp, 'a.lp')
+		lpsolve('set_int', lp, i, True)
+    ret = lpsolve('write_lp', lp, 'lp/'+numProblema+'.lp')
     lpsolve('solve', lp)
     print "Objetivo: ", lpsolve('get_objective', lp)
     variables = lpsolve('get_variables', lp)[0]

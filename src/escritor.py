@@ -1,6 +1,11 @@
 from random import randint
 
-f = open('archivo.in','w')
+from os import listdir
+from os.path import isfile, join
+archivos = sorted([ f for f in listdir("entrada") if isfile(join("entrada",f)) ])
+nombre = int(archivos[-1])+1
+
+f = open("entrada/"+str(nombre),'w')
 
 nCajas = randint(2,20)
 f.write(str(nCajas)+"\n")
