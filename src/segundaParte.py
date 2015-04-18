@@ -134,6 +134,8 @@ for e in terceraRestriccion:
     matriz.append(e)
 for e in cuartaRestriccion:
     matriz.append(e)
+print "Items ", items
+print "Caneca ", caneca
 printMatrix(matriz)
 resolverParte2(matriz,n,i)
 
