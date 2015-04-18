@@ -19,6 +19,7 @@ def resolver(matriz, numMochilas, numObjetos,numProblema):
     for i in range(numMochilas * numObjetos):
         if variables[i] != 0:
             print "El objeto ", i % numObjetos, " ira en la maleta ", int(i / numObjetos)
+	guardarSalida(variables,numMochilas,numObjetos, numProblema)
 
 def resolverParte2(matriz, numMochilas, numObjetos,numProblema):
     posicionOperador = len(matriz[1])-2
@@ -42,3 +43,12 @@ def resolverParte2(matriz, numMochilas, numObjetos,numProblema):
     for i in range(numMochilas * numObjetos):
         if variables[i] != 0:
             print "El objeto ", i % numObjetos, " ira en la maleta ", int(i / numObjetos)
+	guardarSalida(variables,numMochilas,numObjetos, numProblema)
+            
+def guardarSalida(variables,numMochilas,numObjetos, ejercicio):
+	f = open("salida/"+str(ejercicio),'w')
+	for i in range(numMochilas * numObjetos):
+        if variables[i] != 0:
+        	f.write("El objeto "+str( i % numObjetos) + " ira en la maleta "+str(int(i / numObjetos))+"\n")
+    f.close()
+	

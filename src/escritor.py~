@@ -7,7 +7,7 @@ nombre = int(archivos[-1])+1
 
 f = open("entrada/"+str(nombre),'w')
 
-nCajas = randint(2,6)
+nCajas = randint(2,20)
 f.write(str(nCajas)+"\n")
 vMaleta = randint(2,200)
 pMaleta = randint(2,200)
