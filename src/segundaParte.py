@@ -57,8 +57,8 @@ def generarRestriccionesTipo(matriz, tipo):
                     restriccionCanecaI.append(-1)
                 else:
                     restriccionCanecaI.append(0)
-            restriccionCanecaI.append("=")
-            restriccionCanecaI.append(1)
+            restriccionCanecaI.append("<=")
+            restriccionCanecaI.append(0)
             matriz.append(restriccionCanecaI)
             # Para -a - I
             restriccionCanecaJ = []
@@ -74,8 +74,8 @@ def generarRestriccionesTipo(matriz, tipo):
                     restriccionCanecaJ.append(-1)
                 else:
                     restriccionCanecaJ.append(0)
-            restriccionCanecaJ.append("=")
-            restriccionCanecaJ.append(1)
+            restriccionCanecaJ.append("<=")
+            restriccionCanecaJ.append(0)
             matriz.append(restriccionCanecaJ)
             
 
