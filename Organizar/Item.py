@@ -5,4 +5,4 @@ class Item(Objeto):
     def __str__(self):
         return str(self.volumen)+" "+str(self.peso)
     def __repr__(self):
-        return str(self.volumen)+" "+str(self.peso)
+        return "("+str(self.volumen)+" "+str(self.peso)+")"

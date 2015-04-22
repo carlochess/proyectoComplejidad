@@ -110,7 +110,6 @@ segundaRestriccion = []
 terceraRestriccion = []
 cuartaRestriccion = []
 matriz = []
-numeroRestricciones=0
 generarRestricciones()
 generarFuncionObjetivo()
 for e in funcObj:
@@ -126,5 +125,6 @@ for e in cuartaRestriccion:
 print("Items ", items)
 print("Caneca ", caneca)
 printMatrix(matriz)
-resolverParte2(matriz,n,i,numeroProblema,numeroRestricciones)
+numeroRestricciones=0
+resolverParte2(matriz,n,i,numeroProblema)
 

@@ -3,13 +3,14 @@ from Mochila import Mochila
 from os import listdir
 from os.path import isfile, join
 
-def leerArchivo():
+def leerArchivo(entrada):
 	archivos = sorted([ f for f in listdir("entrada") if isfile(join("entrada",f)) ])
-	nombre = int(archivos[-1])
-	f=open("entrada/"+str(nombre),'r')
+	nombre = (str(entrada) if entrada >= 0 else archivos[-1])
+	f=open("entrada/"+nombre,'r')
 	i=0
 	nCajas=0
 	cajas=[]
+	maleta = None
 	for line in f:
 		if i==0:
 			nCajas=int(line)
@@ -23,5 +24,5 @@ def leerArchivo():
 			pCaja=datos[2]
 			cajas.append(Item(int(vCaja),int(pCaja)))
 		i+=1
-	return [maleta, cajas,str(nombre)]
+	return [maleta, cajas,nombre]
 
