@@ -102,7 +102,7 @@ o = leerArchivo(param)
 caneca = o[0]
 items = o[1]
 numeroProblema = o[2] + "_2.lp"
-n = len(items)#int(hallarN())
+n = 4#len(items)#int(hallarN())
 i = len(items)
 funcObj = []
 primeraRestriccion = []
@@ -110,7 +110,7 @@ segundaRestriccion = []
 terceraRestriccion = []
 cuartaRestriccion = []
 matriz = []
-numeroRestricciones=0
+numeroRestricciones=(n* (n-1)) / 2
 generarRestricciones()
 generarFuncionObjetivo()
 for e in funcObj:

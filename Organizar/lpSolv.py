@@ -31,12 +31,13 @@ def resolverParte2(matriz, numMochilas, numObjetos, numProblema, varAbs):
             ret = lpsolve('add_constraint', lp, matriz[i][:posicionOperador], LE, matriz[i][posicionOperador + 1])
         else:
             ret = lpsolve('add_constraint', lp, matriz[i][:posicionOperador], EQ, matriz[i][posicionOperador + 1])
-    for i in range(1, posicionOperador -numMochilas-varAbs):
+    for i in range(1, posicionOperador -numMochilas-varAbs+1):
         lpsolve('set_binary', lp, i, True)
-    for i in range(posicionOperador-numMochilas, posicionOperador + 1):
+    for i in range(posicionOperador-numMochilas-varAbs, posicionOperador + 1):
         lpsolve('set_int', lp, i, True)
     ret = lpsolve('write_lp', lp, 'lp/' + numProblema)
     lpsolve('solve', lp)
+    print "VarABS: ", varAbs
     print "Objetivo: ", lpsolve('get_objective', lp)
     variables = lpsolve('get_variables', lp)[0]
     print "Varibles: ", variables 
