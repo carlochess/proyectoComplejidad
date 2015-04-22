@@ -1,9 +1,9 @@
-El objeto 0 ira en la maleta 0
-El objeto 2 ira en la maleta 0
-El objeto 5 ira en la maleta 0
-El objeto 3 ira en la maleta 1
+El objeto 3 ira en la maleta 0
+El objeto 7 ira en la maleta 1
+El objeto 8 ira en la maleta 1
 El objeto 1 ira en la maleta 2
 El objeto 4 ira en la maleta 2
-El objeto 7 ira en la maleta 2
+El objeto 0 ira en la maleta 3
 El objeto 6 ira en la maleta 3
-El objeto 8 ira en la maleta 3
+El objeto 2 ira en la maleta 4
+El objeto 5 ira en la maleta 4
