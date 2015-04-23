@@ -2,6 +2,7 @@ from __future__ import print_function
 from lector import *
 from lpSolv import *
 import sys
+import math
 
 def generarRestriccionesTipo(matriz, tipo):
     numeroRestricciones = (n* (n-1)) / 2
@@ -18,26 +19,20 @@ def generarRestriccionesTipo(matriz, tipo):
                 else:
                     restriccionCanecaI.append(0)
             if tipo == 0:
-                for k in range(0, numeroRestricciones+n):
-                    if j == k:
-                        restriccionCanecaI.append(-caneca.getPeso())
-                    else:
-                        restriccionCanecaI.append(0)
+                for k in range(0, numeroRestricciones):
+                    restriccionCanecaI.append(0)
                 restriccionCanecaI.append("<=")
-                restriccionCanecaI.append(0)
+                restriccionCanecaI.append(-caneca.getPeso())
             elif tipo == 1:
-                for k in range(0, numeroRestricciones+n):
-                    if j == k:
-                        restriccionCanecaI.append(-caneca.getVolumen())
-                    else:
-                        restriccionCanecaI.append(0)
+                for k in range(0, numeroRestricciones):
+                    restriccionCanecaI.append(0)
                 restriccionCanecaI.append("<=")
-                restriccionCanecaI.append(0)
+                restriccionCanecaI.append(-caneca.getVolumen())
             matriz.append(restriccionCanecaI)
     elif tipo == 2:
         for j in range(0, i):
             restriccionCanecaI = []
-            for k in range(0, i * n + numeroRestricciones+n):
+            for k in range(0, i * n + numeroRestricciones):
                 if (k % i) -j == 0 and k < i * n:
                     restriccionCanecaI.append(1)
                 else:
@@ -59,8 +54,6 @@ def generarRestriccionesTipo(matriz, tipo):
                             restriccionCanecaI.append(-mult * items[k % i].getPeso())
                         else:
                             restriccionCanecaI.append(0)
-                    for k in range(0, n):
-                        restriccionCanecaI.append(0)
                     for k in range(0, numeroRestricciones):
                         if k == r:
                             restriccionCanecaI.append(-1)
@@ -75,7 +68,7 @@ def generarRestriccionesTipo(matriz, tipo):
 def generarFuncObj(matriz):
     restriccionCanecaI = []
     numeroRestricciones = (n* (n-1)) / 2
-    for k in range(0, i * n +n):
+    for k in range(0, i * n):
         restriccionCanecaI.append(0)
     for k in range(0, numeroRestricciones):
         restriccionCanecaI.append(1)
@@ -97,12 +90,26 @@ def printMatrix(testMatrix):
         print(" : ",len(testMatrix[i]))
     print()
 
+def hallarN():
+    sumaPesos = 0
+    sumaVolumenes = 0
+    for i in range(len(items)):
+        sumaPesos += items[i].getPeso()
+    for i in range(len(items)):
+        sumaVolumenes += items[i].getVolumen()
+    pesos = math.ceil(sumaPesos / float(caneca.getPeso()))
+    volumenes = math.ceil(sumaVolumenes / float(caneca.getVolumen()))
+    if(pesos >= volumenes):
+        return pesos
+    else:
+        return volumenes
+
 param = (sys.argv[1] if len(sys.argv) > 1 else -1)
 o = leerArchivo(param)
 caneca = o[0]
 items = o[1]
 numeroProblema = o[2] + "_2.lp"
-n = 5#len(items)#int(hallarN())
+n = int(hallarN())
 i = len(items)
 funcObj = []
 primeraRestriccion = []

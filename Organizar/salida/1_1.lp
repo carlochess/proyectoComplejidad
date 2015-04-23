@@ -1,0 +1,14 @@
+El objeto 5 ira en la maleta 0
+El objeto 8 ira en la maleta 0
+El objeto 12 ira en la maleta 0
+El objeto 1 ira en la maleta 2
+El objeto 2 ira en la maleta 2
+El objeto 9 ira en la maleta 2
+El objeto 11 ira en la maleta 2
+El objeto 0 ira en la maleta 3
+El objeto 3 ira en la maleta 3
+El objeto 7 ira en la maleta 3
+El objeto 10 ira en la maleta 4
+El objeto 4 ira en la maleta 6
+El objeto 6 ira en la maleta 8
+El objeto 13 ira en la maleta 9

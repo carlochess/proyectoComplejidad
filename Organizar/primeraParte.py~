@@ -64,12 +64,10 @@ def hallarN():
         sumaPesos += items[i].getPeso()
     for i in range(len(items)):
         sumaVolumenes += items[i].getVolumen()
-    pesos = math.ceil(sumaPesos / float(caneca.getPeso()))
-    volumenes = math.ceil(sumaVolumenes / float(caneca.getVolumen()))
-    if(pesos >= volumenes):
-        return pesos
+    if(sumaPesos >= sumaVolumenes):
+        return math.ceil(sumaPesos / caneca.getPeso())
     else:
-        return volumenes
+        return math.ceil(sumaVolumenes / caneca.getVolumen())
 
 def generarRestricciones():
     generarRestriccionesTipo(primeraRestriccion, 1)
