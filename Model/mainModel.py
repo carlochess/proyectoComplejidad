@@ -79,6 +79,7 @@ class MainModel(object):
         self.volumeBackpack=propertiesBackpack[0]
         self.maximumWeightBackpack=propertiesBackpack[1]
         self.descriptionBoxes=descriptionBoxes
+        print("-> ", self.descriptionBoxes)
 ##################################################3
     #Esta funcion calcula el numero optimo de personas en este caso seria 10
     def calculateOptimalNumberPeople(self):
