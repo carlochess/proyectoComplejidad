@@ -30,9 +30,10 @@ class MainController(object):
             fileName=QFileDialog.getOpenFileName(self.window,"Abrir archivo",directory)
             with open(fileName,"r") as fileContent:
                 dataList=[line.rstrip("\n") for line in fileContent]
-            self.appModel.setProblemName(fileName)
+            #self.appModel.setProblemName(fileName)
             self.appModel.processingDataList(dataList)
         except:
+            print("Error al leer el archivo")
             pass
         self.window.newWidgetsOne()
         self.initializeWindow()
@@ -98,12 +99,27 @@ class MainController(object):
     def calculateFirstOptimization(self):
         self.appModel.calculateOptimalNumberPeople()
         self.window.lineEditFour.setText((str)(self.appModel.getOptimumNumberPeople()))
+        self.asignarItemsaMochilas()
+
+    def calculateSecondOptimization(self):
+        self.appModel.calculateEvenlyNumberPeople()
+        self.window.lineEditFifth.setText((str)(self.appModel.calculateEvenlyNumberPeople()))
+        self.asignarItemsaMochilas()
 
     def createDataTable(self):
-        return(dataTable.Table(self.appModel.getDataTable(),self.appModel.getNumberBoxes(),3))
+        return(dataTable.Table(self.appModel.getDataTable(),self.appModel.getNumberBoxes(),4))
 
     def initializeWindow(self):
         self.window.lineEditOne.setText((str)(self.appModel.getNumberBoxes()))
         self.window.lineEditTwo.setText((str)(self.appModel.getMaximumWeightBackpack()))
         self.window.lineEditThree.setText((str)(self.appModel.getVolumeBackpack()))
+
+    def asignarItemsaMochilas(self):
+        self.window.asignarItemsaMochilas(self.appModel.getSolucion())
+
+    def functionGrafico(self):
+        if not self.appModel.haySolucion():
+            return
+        self.appModel.graficarSolucion()
+
 #==============================================================================

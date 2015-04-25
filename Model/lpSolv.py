@@ -1,5 +1,5 @@
 from lpsolve55 import *
-def resolver(matriz, numMochilas, numObjetos, numProblema):
+def resolver(matriz, numMochilas, numObjetos, numProblema, sol):
     posicionOperador = len(matriz[1])-2
     lp = lpsolve('make_lp', 0, posicionOperador)
     lpsolve('set_verbose', lp, IMPORTANT)
@@ -20,10 +20,11 @@ def resolver(matriz, numMochilas, numObjetos, numProblema):
     for i in range(numMochilas * numObjetos):
         if variables[i] != 0:
             print("El objeto ", i % numObjetos, " ira en la maleta ", int(i / numObjetos))
-    guardarSalida(variables, numMochilas, numObjetos, numProblema)
-    return numeroMochilas
+    #guardarSalida(variables, numMochilas, numObjetos, numProblema)
+    sol.procesarPrimeraSolucion(variables,numMochilas, numObjetos, numProblema, 0,numeroMochilas)
+    return sol
 
-def resolverParte2(matriz, numMochilas, numObjetos, numProblema, varAbs):
+def resolverParte2(matriz, numMochilas, numObjetos, numProblema, varAbs,sol):
     posicionOperador = len(matriz[1])-2
     lp = lpsolve('make_lp', 0, posicionOperador)
     lpsolve('set_verbose', lp, IMPORTANT)
@@ -40,17 +41,13 @@ def resolverParte2(matriz, numMochilas, numObjetos, numProblema, varAbs):
     ret = lpsolve('write_lp', lp, 'lp/' + numProblema)
     lpsolve('solve', lp)
     print("VarABS: ", varAbs)
-    print("Objetivo: ", lpsolve('get_objective', lp))
+    solucion = lpsolve('get_objective', lp)
+    print("Objetivo: ", solucion)
     variables = lpsolve('get_variables', lp)[0]
     print("Varibles: ", variables)
     for i in range(numMochilas * numObjetos):
         if variables[i] != 0:
             print("El objeto ", i % numObjetos, " ira en la maleta ", int(i / numObjetos))
-    guardarSalida(variables, numMochilas, numObjetos, numProblema)
-
-def guardarSalida(variables, numMochilas, numObjetos, ejercicio):
-    f = open("Salida/" + str(ejercicio), 'w')
-    for i in range(numMochilas * numObjetos):
-        if variables[i] != 0:
-            f.write("El objeto " + str(i % numObjetos) + " ira en la maleta " + str(int(i / numObjetos)) + "\n")
-    f.close()
+    #guardarSalida(variables, numMochilas, numObjetos, numProblema)
+    sol.procesarSegundaSolucion(variables,numMochilas, numObjetos, numProblema, varAbs)
+    return sol

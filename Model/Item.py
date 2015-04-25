@@ -6,3 +6,7 @@ class Item(Objeto):
         return str(self.volumen)+" "+str(self.peso)
     def __repr__(self):
         return "("+str(self.volumen)+" "+str(self.peso)+")"
+    def setMochila(self,mochila):
+        self.mochila = mochila
+    def getMochila(self):
+        return self.mochila

@@ -12,6 +12,7 @@ class MainModel(object):
         self.maximumWeightBackpack=maximumWeightBackpack
         self.descriptionBoxes=descriptionBoxes
         self.optimumNumberPeople=optimumNumberPeople
+        self.solucion = None
 
     def getNumberBoxes(self):
         return(self.numberBoxes)
@@ -29,9 +30,9 @@ class MainModel(object):
         return(self.optimumNumberPeople)
 
     def getDataTable(self):
-        return({"Box Number":self.listBoxNumber(self.descriptionBoxes),
-                "Box Volume":self.listBoxVolume(self.descriptionBoxes),
-                "Box Weight":self.listBoxWeight(self.descriptionBoxes)})
+        return({"Box":[],"Item Number":self.listBoxNumber(self.descriptionBoxes),
+                "Item Volume":self.listBoxVolume(self.descriptionBoxes),
+                "Item Weight":self.listBoxWeight(self.descriptionBoxes)})
 
     def listBoxNumber(self,dataList):
         newDataList=[]
@@ -84,37 +85,51 @@ class MainModel(object):
     #Esta funcion calcula el numero optimo de personas en este caso seria 10
     def calculateOptimalNumberPeople(self):
         from .primeraModel import PrimeraParteModel
-        p = PrimeraParteModel(self.descriptionBoxes,self.volumeBackpack,self.maximumWeightBackpack)
-        self.optimumNumberPeople = p.getNumPersonas()
+        self.modeloSolucion = PrimeraParteModel(self.descriptionBoxes,self.volumeBackpack,self.maximumWeightBackpack)
+        self.solucion = self.modeloSolucion.getSolucion()
+        self.optimumNumberPeople = self.modeloSolucion.getNumPersonas()
 
     #Esta funcion calcula el numero optimo de personas en este caso seria 10
-    def calculateEquitativeNumberPeople(self):
+    def calculateEvenlyNumberPeople(self):
         from .segundaModel import SegundaParteModel
-        p = SegundaParteModel(self.descriptionBoxes,self.volumeBackpack,self.maximumWeightBackpack)
-        self.optimumNumberPeople = p.getNumPersonas()
+        self.modeloSolucion = SegundaParteModel(self.descriptionBoxes,self.volumeBackpack,self.maximumWeightBackpack)
+        self.solucion = self.modeloSolucion.getSolucion()
+        self.optimumNumberPeople = self.modeloSolucion.getNumPersonas()
 
-    def generarGrafico(self):
+    def getSolucion(self):
+        return self.solucion
+
+    def haySolucion(self):
+        return self.solucion is not None
+
+    ## Esto deberia estar en la vista, don't kill me pls :(
+    def graficarSolucion(self):
         import numpy as np
         import matplotlib.pyplot as plt
 
-        N = 5
-        menMeans = (20, 35, 30, 35, 27)
-        menStd =   (2, 3, 4, 1, 2)
+        listaVolumen = self.solucion.getVolumenesItems()
+        listaPesos = self.solucion.getPesosItems()
+        N = len(listaVolumen)
+        menMeans =listaVolumen
+        menStd =   np.arange(N)
 
-        ind = np.arange(N)  # the x locations for the groups
-        width = 0.35       # the width of the bars
+        ind = np.arange(N)
+        width = 0.35
 
         fig, ax = plt.subplots()
-        rects1 = ax.bar(ind, menMeans, width, color='r', yerr=menStd)
+        rects1 = ax.bar(ind, menMeans, width, color='b', yerr=menStd)
 
-        womenMeans = (25, 32, 34, 20, 25)
-        womenStd =   (3, 5, 2, 3, 3)
+        womenMeans = listaPesos
+        womenStd =  np.arange(len(listaPesos))
         rects2 = ax.bar(ind+width, womenMeans, width, color='y', yerr=womenStd)
 
         ax.set_ylabel('Valoes')
         ax.set_title('Valores por volumen y peso')
         ax.set_xticks(ind+width)
-        ax.set_xticklabels( ('M0', 'M1', 'M2', 'M3', 'M4') )
+        labelsMaletas = []
+        for i in range(N):
+            labelsMaletas.append("Maleta "+str(i))
+        ax.set_xticklabels( labelsMaletas )
 
         ax.legend( (rects1[0], rects2[0]), ('Volumen', 'Peso') )
 
@@ -123,6 +138,9 @@ class MainModel(object):
                 height = rect.get_height()
                 ax.text(rect.get_x()+rect.get_width()/2., 1.05*height, '%d'%int(height),
                         ha='center', va='bottom')
+
+        ax.axhline(y=self.solucion.getMochila().getVolumen(),xmin=0,xmax=3,c="blue",linewidth=0.5,zorder=0)
+        ax.axhline(y=self.solucion.getMochila().getPeso(),xmin=0,xmax=3,c="red",linewidth=0.5,zorder=0)
 
         autolabel(rects1)
         autolabel(rects2)

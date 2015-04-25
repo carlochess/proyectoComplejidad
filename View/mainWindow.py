@@ -30,7 +30,7 @@ class MainWindow(QMainWindow):
     def initWindow(self):
         self.setWindowTitle(self.tr("Complexity and Optimization"))
         self.setWindowIcon(QIcon("Image/Logo.ico"))
-        self.setMinimumSize(550,450)
+        self.setMinimumSize(700,550)
         self.centerWindow()
 
     def centerWindow(self):
@@ -57,6 +57,11 @@ class MainWindow(QMainWindow):
         self.botonRandom.setIcon(QIcon("Image/Dice.ico"))
         self.botonRandom.setShortcut("Ctrl+D")
         self.botonRandom.setStatusTip(self.trUtf8("Random file generator."))
+
+        self.botonGrafico=QAction("Grafico",self)
+        self.botonGrafico.setIcon(QIcon("Image/Grafico.ico"))
+        self.botonGrafico.setShortcut("Ctrl+G")
+        self.botonGrafico.setStatusTip(self.trUtf8("Solution plot generator."))
 
         self.botonHelp=QAction("Help",self)
         self.botonHelp.setIcon(QIcon("Image/Help.ico"))
@@ -92,6 +97,7 @@ class MainWindow(QMainWindow):
         self.toolbar.addAction(self.botonExit)
         self.toolbar.addAction(self.botonOpenFile)
         self.toolbar.addAction(self.botonRandom)
+        self.toolbar.addAction(self.botonGrafico)
         self.toolbar.addAction(self.botonHelp)
         self.addToolBar(self.toolbar)
 
@@ -137,13 +143,21 @@ class MainWindow(QMainWindow):
         self.lineEditFour.setToolTip("Optimum Number of People")
         self.lineEditFour.setStatusTip(self.trUtf8("Optimum number of people."))
 
+        self.lineEditFifth=QLineEdit()
+        self.lineEditFifth.setToolTip("Equitativo")
+        self.lineEditFifth.setStatusTip(self.trUtf8("Equitativo."))
+
     #==========================================================================
     #==================================Button==================================
     #==========================================================================
     def initButton(self):
-        self.botonOne=QPushButton("Calculating the Optimum Number of People",self)
+        self.botonOne=QPushButton("Solucion 1",self)
         self.botonOne.setToolTip("Calculating the Optimum Number of People")
         self.botonOne.setStatusTip(self.trUtf8("Calculating the optimum number of people."))
+
+        self.botonTwo=QPushButton("Solucion 2",self)
+        self.botonTwo.setToolTip("Calculating the Optimum Number of People")
+        self.botonTwo.setStatusTip(self.trUtf8("Calculating the optimum number of people."))
 
     #==========================================================================
     #=================================GroupBox=================================
@@ -171,7 +185,9 @@ class MainWindow(QMainWindow):
         self.controlLayout.addWidget(self.lineEditThree,0,3)
         self.controlLayoutTwo.addWidget(self.dataTable,0,0)
         self.controlLayoutThree.addWidget(self.botonOne,0,0)
+        self.controlLayoutThree.addWidget(self.botonTwo,1,0)
         self.controlLayoutThree.addWidget(self.lineEditFour,0,1)
+        self.controlLayoutThree.addWidget(self.lineEditFifth,1,1)
 
     #==========================================================================
     #================================Status Bar================================
@@ -185,10 +201,15 @@ class MainWindow(QMainWindow):
     def initSignals(self):
         self.connect(self.botonExit,SIGNAL("triggered()"),self.appController.functionExit)
         self.connect(self.botonOpenFile,SIGNAL("triggered()"),self.appController.functionOpenFile)
+        self.connect(self.botonGrafico,SIGNAL("triggered()"),self.appController.functionGrafico)
         self.connect(self.botonRandom,SIGNAL("triggered()"),self.appController.functionRandom)
         self.connect(self.botonHelp,SIGNAL("triggered()"),self.appController.functionHelp)
         self.connect(self.botonAbout,SIGNAL("triggered()"),self.appController.functionAbout)
 
+    def asignarItemsaMochilas(self, solucion):
+        self.dataTable.asignarItemsaMochilas(solucion)
+
     def signals(self):
         self.connect(self.botonOne,SIGNAL("clicked()"),self.appController.calculateFirstOptimization)
+        self.connect(self.botonTwo,SIGNAL("clicked()"),self.appController.calculateSecondOptimization)
 #==============================================================================

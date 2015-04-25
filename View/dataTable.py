@@ -26,4 +26,9 @@ class Table(QTableWidget):
                 newitem=QTableWidgetItem(item)
                 self.setItem(j,i,newitem)
         self.setHorizontalHeaderLabels(horHeaders)
+
+    def asignarItemsaMochilas(self,solucion):
+        for i in range(self.rowCount()):
+            newitem=QTableWidgetItem(str(solucion.getItem(i).getMochila()))
+            self.setItem(i,0,newitem)
 #==============================================================================

@@ -1,51 +1,52 @@
+from __future__ import print_function
 class SegundaParteModel:
 
     def __init__(self,descriptionBoxes,volumeBackpack,maximumWeightBackpack):
         from .Item import Item
+        from .Solucion import Solucion
         from .Mochila import Mochila
-        from .lpSolv import resolver
-
+        from .lpSolv import resolverParte2
+        self.nombreProblema = "1"
         self.items = []
         self.mochila = None
-        for listaCaja in self.descriptionBoxes:
+        for listaCaja in descriptionBoxes:
             self.items.append(Item(int(listaCaja[1]),int(listaCaja[2])))
         print(self.items)
         self.mochila=Mochila(volumeBackpack,maximumWeightBackpack)
         print(self.mochila)
-        numeroProblema = self.nombreProblema+"_1.lp"
+        numeroProblema = self.nombreProblema+"_2.lp"
         self.n = len(self.items)#int(self.hallarN())
         self.i = len(self.items)
         funcObj = []
-        primeraRestriccion = []
-        segundaRestriccion = []
-        terceraRestriccion = []
-        cuartaRestriccion = []
+        self.primeraRestriccion = []
+        self.segundaRestriccion = []
+        self.terceraRestriccion = []
+        self.cuartaRestriccion = []
         matriz = []
-        numeroRestricciones=(n* (n-1)) / 2
-        generarRestricciones()
-        generarFuncionObjetivo()
+        self.numeroRestricciones=(self.n* (self.n-1)) / 2
+        self.generarRestricciones()
+        self.generarFuncObj(matriz)
         for e in funcObj:
             matriz.append(e)
-        for e in primeraRestriccion:
+        for e in self.primeraRestriccion:
             matriz.append(e)
-        for e in segundaRestriccion:
+        for e in self.segundaRestriccion:
             matriz.append(e)
-        for e in terceraRestriccion:
+        for e in self.terceraRestriccion:
             matriz.append(e)
-        for e in cuartaRestriccion:
+        for e in self.cuartaRestriccion:
             matriz.append(e)
-        print("Items ", items)
-        print("Caneca ", caneca)
-        printMatrix(matriz)
-        resolverParte2(matriz,n,i,numeroProblema,numeroRestricciones)
-        self.optimumNumberPeople = resolver(self.matriz,self.n,self.i,numeroProblema)
+        numeroProblema = "2"
+        self.solucion = resolverParte2(matriz,self.n,self.i,numeroProblema,self.numeroRestricciones,Solucion(self.mochila,self.items,matriz))
 
     def setProblemName(self, nombre):
         self.nombreProblema = "0"
         print(self.nombreProblema)
 
     def generarRestriccionesTipo(self, matriz, tipo):
-        numeroRestricciones = (n * ( n - 1 ) ) / 2
+        numeroRestricciones = self.numeroRestricciones
+        n = self.n
+        i = self.i
         if tipo == 0 or tipo == 1:
             for j in range(0, n):
                 restriccionCanecaI = []
@@ -53,21 +54,21 @@ class SegundaParteModel:
                     if k >= i * j and k < i * j + i:
                         objPos = k % i
                         if tipo == 0:
-                            restriccionCanecaI.append(items[objPos].getPeso())
+                            restriccionCanecaI.append(self.items[objPos].getPeso())
                         elif tipo == 1:
-                            restriccionCanecaI.append(items[objPos].getVolumen())
+                            restriccionCanecaI.append(self.items[objPos].getVolumen())
                     else:
                         restriccionCanecaI.append(0)
                 if tipo == 0:
                     for k in range(0, numeroRestricciones):
                         restriccionCanecaI.append(0)
                     restriccionCanecaI.append("<=")
-                    restriccionCanecaI.append(caneca.getPeso())
+                    restriccionCanecaI.append(self.mochila.getPeso())
                 elif tipo == 1:
                     for k in range(0, numeroRestricciones):
                         restriccionCanecaI.append(0)
                     restriccionCanecaI.append("<=")
-                    restriccionCanecaI.append(caneca.getVolumen())
+                    restriccionCanecaI.append(self.mochila.getVolumen())
                 matriz.append(restriccionCanecaI)
         elif tipo == 2:
             for j in range(0, i):
@@ -89,9 +90,9 @@ class SegundaParteModel:
                         restriccionCanecaI = []
                         for k in range(0, i * n):
                             if k >= u * i and k < u * i + i:
-                                restriccionCanecaI.append(mult * items[k % i].getPeso())
+                                restriccionCanecaI.append(mult * self.items[k % i].getPeso())
                             elif k >= v * i and k < v * i + i:
-                                restriccionCanecaI.append(-mult * items[k % i].getPeso())
+                                restriccionCanecaI.append(-mult * self.items[k % i].getPeso())
                             else:
                                 restriccionCanecaI.append(0)
                         for k in range(0, numeroRestricciones):
@@ -107,7 +108,9 @@ class SegundaParteModel:
 
     def generarFuncObj(self, matriz):
         restriccionCanecaI = []
-        numeroRestricciones = (n* (n-1)) / 2
+        numeroRestricciones = self.numeroRestricciones
+        n = self.n
+        i = self.i
         for k in range(0, i * n):
             restriccionCanecaI.append(0)
         for k in range(0, numeroRestricciones):
@@ -131,17 +134,13 @@ class SegundaParteModel:
             return volumenes
 
     def generarRestricciones(self):
-        generarRestriccionesTipo(primeraRestriccion, 1)
-        generarRestriccionesTipo(segundaRestriccion, 0)
-        generarRestriccionesTipo(terceraRestriccion, 2)
-        generarRestriccionesTipo(cuartaRestriccion, 3)
+        self.generarRestriccionesTipo(self.primeraRestriccion, 1)
+        self.generarRestriccionesTipo(self.segundaRestriccion, 0)
+        self.generarRestriccionesTipo(self.terceraRestriccion, 2)
+        self.generarRestriccionesTipo(self.cuartaRestriccion, 3)
 
-    def printMatrix(self,testMatrix):
-        for i in range(len(testMatrix)):
-            for j in range(len(testMatrix[i])):
-                print(testMatrix[i][j], end=" ")
-            print()
-        print()
+    def getSolucion(self):
+        return self.solucion
 
     def getNumPersonas(self):
-        return self.optimumNumberPeople
+        return self.solucion.getNumeroMochilas()

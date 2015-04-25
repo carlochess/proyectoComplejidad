@@ -6,6 +6,7 @@ class PrimeraParteModel:
         from .Item import Item
         from .Mochila import Mochila
         from .lpSolv import resolver
+        from .Solucion import Solucion
         self.nombreProblema = "1"
         self.items = []
         self.mochila = None
@@ -32,9 +33,7 @@ class PrimeraParteModel:
             self.matriz.append(e)
         for e in self.terceraRestriccion:
             self.matriz.append(e)
-        print("nObjetos: ", self.i , ", nself.mochilas=", self.n)
-        self.printMatrix(self.matriz)
-        self.optimumNumberPeople = resolver(self.matriz,self.n,self.i,numeroProblema)
+        self.solucion = resolver(self.matriz,self.n,self.i,numeroProblema,Solucion(self.mochila,self.items,self.matriz))
 
     def setProblemName(self, nombre):
         self.nombreProblema = "0"
@@ -112,12 +111,8 @@ class PrimeraParteModel:
         self.generarRestriccionesTipo(self.segundaRestriccion, 0)
         self.generarRestriccionesTipo(self.terceraRestriccion, 2)
 
-    def printMatrix(self,testMatrix):
-        for i in range(len(testMatrix)):
-            for j in range(len(testMatrix[i])):
-                print(testMatrix[i][j], end=" ")
-            print()
-        print()
-
     def getNumPersonas(self):
-        return self.optimumNumberPeople
+        return self.solucion.getNumeroMochilas()
+
+    def getSolucion(self):
+        return self.solucion
