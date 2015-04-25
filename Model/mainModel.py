@@ -83,14 +83,14 @@ class MainModel(object):
     #Esta funcion calcula el numero optimo de personas en este caso seria 10
     def calculateOptimalNumberPeople(self):
         from .primeraModel import PrimeraParteModel
-        p = PrimeraParteModel()
-        self.optimumNumberPeople = p.getNumPersonas(self.descriptionBoxes,self.volumeBackpack,self.maximumWeightBackpack)
+        p = PrimeraParteModel(self.descriptionBoxes,self.volumeBackpack,self.maximumWeightBackpack)
+        self.optimumNumberPeople = p.getNumPersonas()
 
     #Esta funcion calcula el numero optimo de personas en este caso seria 10
     def calculateEquitativeNumberPeople(self):
         from .segundaModel import SegundaParteModel
-        p = SegundaParteModel()
-        self.optimumNumberPeople = p.getNumPersonas(self.descriptionBoxes,self.volumeBackpack,self.maximumWeightBackpack)
+        p = SegundaParteModel(self.descriptionBoxes,self.volumeBackpack,self.maximumWeightBackpack)
+        self.optimumNumberPeople = p.getNumPersonas()
 
     def generarGrafico(self):
         import numpy as np

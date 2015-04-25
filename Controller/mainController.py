@@ -60,7 +60,7 @@ class MainController(object):
         f.close()
         with open(fileName,"r") as fileContent:
             dataList=[line.rstrip("\n") for line in fileContent]
-        self.appModel.setProblemName(nombre)
+        #self.appModel.setProblemName(nombre)
         self.appModel.processingDataList(dataList)
         self.window.newWidgetsOne()
         self.initializeWindow()

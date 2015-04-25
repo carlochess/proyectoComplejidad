@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+from __future__ import print_function
 class PrimeraParteModel:
 
     def __init__(self,descriptionBoxes,volumeBackpack,maximumWeightBackpack):
         from .Item import Item
         from .Mochila import Mochila
         from .lpSolv import resolver
-
+        self.nombreProblema = "1"
         self.items = []
         self.mochila = None
         for listaCaja in descriptionBoxes:
@@ -118,5 +119,5 @@ class PrimeraParteModel:
             print()
         print()
 
-    def getNumPersonas():
+    def getNumPersonas(self):
         return self.optimumNumberPeople

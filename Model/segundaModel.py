@@ -143,5 +143,5 @@ class SegundaParteModel:
             print()
         print()
 
-    def getNumPersonas():
+    def getNumPersonas(self):
         return self.optimumNumberPeople
