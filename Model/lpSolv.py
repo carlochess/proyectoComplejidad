@@ -11,7 +11,7 @@ def resolver(matriz, numMochilas, numObjetos, numProblema):
             ret = lpsolve('add_constraint', lp, matriz[i][:posicionOperador], EQ, matriz[i][posicionOperador + 1])
     for i in range(1, posicionOperador + 1):
         lpsolve('set_binary', lp, i, True)
-    ret = lpsolve('write_lp', lp, 'lp/' + numProblema)
+    ret = lpsolve('write_lp', lp, 'LP/' + numProblema)
     lpsolve('solve', lp)
     numeroMochilas = lpsolve('get_objective', lp)
     print("Objetivo: ", )

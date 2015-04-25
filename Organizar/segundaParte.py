@@ -63,7 +63,7 @@ def generarRestriccionesTipo(matriz, tipo):
                     restriccionCanecaI.append(0)
                     matriz.append(restriccionCanecaI)
                     mult = mult * -1
-            	r += 1
+                r += 1
 
 def generarFuncObj(matriz):
     restriccionCanecaI = []

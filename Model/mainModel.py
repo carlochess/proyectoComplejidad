@@ -80,117 +80,51 @@ class MainModel(object):
         self.maximumWeightBackpack=propertiesBackpack[1]
         self.descriptionBoxes=descriptionBoxes
 ##################################################3
-    def generarRestriccionesTipo(self, matriz, tipo):
-        i=self.i
-        if tipo == 0 or tipo == 1:
-            for j in range(0, self.n):
-                restriccioncanecaI = []
-                for k in range(0, i * self.n):
-                    if k >= i * j and k < i * j + i:
-                        objPos = k % i
-                        if tipo == 0:
-                            restriccioncanecaI.append(self.items[objPos].getPeso())
-                        elif tipo == 1:
-                            restriccioncanecaI.append(self.items[objPos].getVolumen())
-                    else:
-                        restriccioncanecaI.append(0)
-                if tipo == 0:
-                    for k in range(0, self.n):
-                        if j == k:
-                            restriccioncanecaI.append(-self.mochila.getPeso())
-                        else:
-                            restriccioncanecaI.append(0)
-                    restriccioncanecaI.append("<=")
-                    restriccioncanecaI.append(0)
-                elif tipo == 1:
-                    for k in range(0, self.n):
-                        if j == k:
-                            restriccioncanecaI.append(-self.mochila.getVolumen())
-                        else:
-                            restriccioncanecaI.append(0)
-                    restriccioncanecaI.append("<=")
-                    restriccioncanecaI.append(0)
-                matriz.append(restriccioncanecaI)
-        else:
-            for j in range(0, i):
-                restriccioncanecaI = []
-                for k in range(0, i * self.n+self.n):
-                    if (k % i) -j == 0 and k < i*self.n:
-                        restriccioncanecaI.append(1)
-                    else:
-                        restriccioncanecaI.append(0)
-                restriccioncanecaI.append("=")
-                restriccioncanecaI.append(1)
-                matriz.append(restriccioncanecaI)
-
-    def generarFuncObj(self, matriz):
-        restriccioncanecaI = []
-        for k in range(0, self.i * self.n):
-            restriccioncanecaI.append(0)
-        for k in range(0, self.n):
-            restriccioncanecaI.append(1)
-        matriz.append(restriccioncanecaI)
-
-
-    def hallarN(self):
-        import math
-        sumaPesos = 0
-        sumaVolumenes = 0
-        for i in range(len(self.items)):
-            sumaPesos += self.items[i].getPeso()
-        for i in range(len(self.items)):
-            sumaVolumenes += self.items[i].getVolumen()
-        pesos = math.ceil(sumaPesos / float(self.mochila.getPeso()))
-        volumenes = math.ceil(sumaVolumenes / float(self.mochila.getVolumen()))
-        if(pesos >= volumenes):
-            return pesos
-        else:
-            return volumenes
-
-    def generarRestricciones(self):
-        self.generarRestriccionesTipo(self.primeraRestriccion, 1)
-        self.generarRestriccionesTipo(self.segundaRestriccion, 0)
-        self.generarRestriccionesTipo(self.terceraRestriccion, 2)
-
-    def printMatrix(self,testMatrix):
-        for i in range(len(testMatrix)):
-            for j in range(len(testMatrix[i])):
-                print(testMatrix[i][j], end=" ")
-            print()
-        print()
-
     #Esta funcion calcula el numero optimo de personas en este caso seria 10
     def calculateOptimalNumberPeople(self):
-        from .Item import Item
-        from .Mochila import Mochila
-        from .lpSolv import resolver
+        from .primeraModel import PrimeraParteModel
+        p = PrimeraParteModel()
+        self.optimumNumberPeople = p.getNumPersonas(self.descriptionBoxes,self.volumeBackpack,self.maximumWeightBackpack)
 
-        self.items = []
-        self.mochila = None
-        for listaCaja in self.descriptionBoxes:
-            self.items.append(Item(int(listaCaja[1]),int(listaCaja[2])))
-        print(self.items)
-        self.mochila=Mochila(self.volumeBackpack,self.maximumWeightBackpack)
-        print(self.mochila)
-        numeroProblema = "1_1.lp"
-        self.n = int(self.hallarN())
-        self.i = len(self.items)
-        funcObj = []
-        self.primeraRestriccion = []
-        self.segundaRestriccion = []
-        self.terceraRestriccion = []
-        self.matriz = []
-        self.generarRestricciones()
-        self.generarFuncObj(self.matriz)
-        for e in funcObj:
-            self.matriz.append(e)
-        for e in self.primeraRestriccion:
-            self.matriz.append(e)
-        for e in self.segundaRestriccion:
-            self.matriz.append(e)
-        for e in self.terceraRestriccion:
-            self.matriz.append(e)
-        print("nObjetos: ", self.i , ", nself.mochilas=", self.n)
-        self.printMatrix(self.matriz)
-        self.optimumNumberPeople = resolver(self.matriz,self.n,self.i,numeroProblema)
+    #Esta funcion calcula el numero optimo de personas en este caso seria 10
+    def calculateEquitativeNumberPeople(self):
+        from .segundaModel import SegundaParteModel
+        p = SegundaParteModel()
+        self.optimumNumberPeople = p.getNumPersonas(self.descriptionBoxes,self.volumeBackpack,self.maximumWeightBackpack)
+
+    def generarGrafico(self):
+        import numpy as np
+        import matplotlib.pyplot as plt
+
+        N = 5
+        menMeans = (20, 35, 30, 35, 27)
+        menStd =   (2, 3, 4, 1, 2)
+
+        ind = np.arange(N)  # the x locations for the groups
+        width = 0.35       # the width of the bars
+
+        fig, ax = plt.subplots()
+        rects1 = ax.bar(ind, menMeans, width, color='r', yerr=menStd)
+
+        womenMeans = (25, 32, 34, 20, 25)
+        womenStd =   (3, 5, 2, 3, 3)
+        rects2 = ax.bar(ind+width, womenMeans, width, color='y', yerr=womenStd)
+
+        ax.set_ylabel('Valoes')
+        ax.set_title('Valores por volumen y peso')
+        ax.set_xticks(ind+width)
+        ax.set_xticklabels( ('M0', 'M1', 'M2', 'M3', 'M4') )
+
+        ax.legend( (rects1[0], rects2[0]), ('Volumen', 'Peso') )
+
+        def autolabel(rects):
+            for rect in rects:
+                height = rect.get_height()
+                ax.text(rect.get_x()+rect.get_width()/2., 1.05*height, '%d'%int(height),
+                        ha='center', va='bottom')
+
+        autolabel(rects1)
+        autolabel(rects2)
+
+        plt.show()
 #==============================================================================

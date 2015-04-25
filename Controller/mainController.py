@@ -29,6 +29,7 @@ class MainController(object):
             fileName=QFileDialog.getOpenFileName(self.window,"Abrir archivo",directory)
             with open(fileName,"r") as fileContent:
                 dataList=[line.rstrip("\n") for line in fileContent]
+            self.appModel.setProblemName(fileName)
             self.appModel.processingDataList(dataList)
         except:
             pass
@@ -59,6 +60,7 @@ class MainController(object):
         f.close()
         with open(fileName,"r") as fileContent:
             dataList=[line.rstrip("\n") for line in fileContent]
+        self.appModel.setProblemName(nombre)
         self.appModel.processingDataList(dataList)
         self.window.newWidgetsOne()
         self.initializeWindow()
