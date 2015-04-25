@@ -13,13 +13,15 @@ def resolver(matriz, numMochilas, numObjetos, numProblema):
         lpsolve('set_binary', lp, i, True)
     ret = lpsolve('write_lp', lp, 'lp/' + numProblema)
     lpsolve('solve', lp)
-    print "Objetivo: ", lpsolve('get_objective', lp)
+    numeroMochilas = lpsolve('get_objective', lp)
+    print("Objetivo: ", )
     variables = lpsolve('get_variables', lp)[0]
-    print "Varibles: ", variables 
+    print("Varibles: ", variables)
     for i in range(numMochilas * numObjetos):
         if variables[i] != 0:
-            print "El objeto ", i % numObjetos, " ira en la maleta ", int(i / numObjetos)
-	guardarSalida(variables, numMochilas, numObjetos, numProblema)
+            print("El objeto ", i % numObjetos, " ira en la maleta ", int(i / numObjetos))
+    guardarSalida(variables, numMochilas, numObjetos, numProblema)
+    return numeroMochilas
 
 def resolverParte2(matriz, numMochilas, numObjetos, numProblema, varAbs):
     posicionOperador = len(matriz[1])-2
@@ -37,19 +39,18 @@ def resolverParte2(matriz, numMochilas, numObjetos, numProblema, varAbs):
         lpsolve('set_int', lp, i, True)
     ret = lpsolve('write_lp', lp, 'lp/' + numProblema)
     lpsolve('solve', lp)
-    print "VarABS: ", varAbs
-    print "Objetivo: ", lpsolve('get_objective', lp)
+    print("VarABS: ", varAbs)
+    print("Objetivo: ", lpsolve('get_objective', lp))
     variables = lpsolve('get_variables', lp)[0]
-    print "Varibles: ", variables 
+    print("Varibles: ", variables)
     for i in range(numMochilas * numObjetos):
         if variables[i] != 0:
-            print "El objeto ", i % numObjetos, " ira en la maleta ", int(i / numObjetos)
-	guardarSalida(variables, numMochilas, numObjetos, numProblema)
-            
+            print("El objeto ", i % numObjetos, " ira en la maleta ", int(i / numObjetos))
+    guardarSalida(variables, numMochilas, numObjetos, numProblema)
+
 def guardarSalida(variables, numMochilas, numObjetos, ejercicio):
-    f = open("salida/" + str(ejercicio), 'w')
+    f = open("Salida/" + str(ejercicio), 'w')
     for i in range(numMochilas * numObjetos):
         if variables[i] != 0:
             f.write("El objeto " + str(i % numObjetos) + " ira en la maleta " + str(int(i / numObjetos)) + "\n")
     f.close()
-	

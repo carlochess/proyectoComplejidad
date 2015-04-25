@@ -53,6 +53,11 @@ class MainWindow(QMainWindow):
         self.botonOpenFile.setShortcut("Ctrl+E")
         self.botonOpenFile.setStatusTip(self.trUtf8("Open the file with the input data."))
 
+        self.botonRandom=QAction("Random",self)
+        self.botonRandom.setIcon(QIcon("Image/Dice.ico"))
+        self.botonRandom.setShortcut("Ctrl+D")
+        self.botonRandom.setStatusTip(self.trUtf8("Random file generator."))
+
         self.botonHelp=QAction("Help",self)
         self.botonHelp.setIcon(QIcon("Image/Help.ico"))
         self.botonHelp.setShortcut("Ctrl+N")
@@ -86,6 +91,7 @@ class MainWindow(QMainWindow):
         self.toolbar=QToolBar(self)
         self.toolbar.addAction(self.botonExit)
         self.toolbar.addAction(self.botonOpenFile)
+        self.toolbar.addAction(self.botonRandom)
         self.toolbar.addAction(self.botonHelp)
         self.addToolBar(self.toolbar)
 
@@ -179,6 +185,7 @@ class MainWindow(QMainWindow):
     def initSignals(self):
         self.connect(self.botonExit,SIGNAL("triggered()"),self.appController.functionExit)
         self.connect(self.botonOpenFile,SIGNAL("triggered()"),self.appController.functionOpenFile)
+        self.connect(self.botonRandom,SIGNAL("triggered()"),self.appController.functionRandom)
         self.connect(self.botonHelp,SIGNAL("triggered()"),self.appController.functionHelp)
         self.connect(self.botonAbout,SIGNAL("triggered()"),self.appController.functionAbout)
 

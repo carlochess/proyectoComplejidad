@@ -35,6 +35,34 @@ class MainController(object):
         self.window.newWidgetsOne()
         self.initializeWindow()
 
+    def functionRandom(self):
+        from random import randint
+        from os import listdir
+        from os.path import isfile, join
+        archivos = sorted([ f for f in listdir("DataInput") if isfile(join("DataInput",f)) ])
+        if len(archivos) == 0:
+            nombre = "0"
+        else:
+            nombre = int(archivos[-1])+1
+        fileName = "DataInput/"+str(nombre)
+        f = open(fileName,'w')
+        nCajas = randint(2,6)
+        f.write(str(nCajas)+"\n")
+        vMaleta = randint(2,200)
+        pMaleta = randint(2,200)
+        f.write(str(vMaleta)+" "+str(pMaleta)+"\n")
+        for i in range(nCajas):
+            nCaja = i
+            vCaja = randint(1,vMaleta)
+            pCaja = randint(1,pMaleta)
+            f.write(str(nCaja)+" "+str(vCaja)+" "+str(pCaja)+"\n")
+        f.close()
+        with open(fileName,"r") as fileContent:
+            dataList=[line.rstrip("\n") for line in fileContent]
+        self.appModel.processingDataList(dataList)
+        self.window.newWidgetsOne()
+        self.initializeWindow()
+
     def functionHelp(self):
         QMessageBox.question(self.window, "Help - Complexity and Optimization",
         """

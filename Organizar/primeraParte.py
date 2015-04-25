@@ -2,8 +2,8 @@ from __future__ import print_function
 from Item import Item
 from Mochila import Mochila
 from lpSolv import *
-import math
 from lector import *
+import math
 import sys
 
 def generarRestriccionesTipo(matriz, tipo):
