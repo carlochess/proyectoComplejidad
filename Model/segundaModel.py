@@ -1,7 +1,7 @@
 from __future__ import print_function
 class SegundaParteModel:
 
-    def __init__(self,descriptionBoxes,volumeBackpack,maximumWeightBackpack):
+    def __init__(self,descriptionBoxes,volumeBackpack,maximumWeightBackpack, n=-1):
         from .Item import Item
         from .Solucion import Solucion
         from .Mochila import Mochila
@@ -15,7 +15,7 @@ class SegundaParteModel:
         self.mochila=Mochila(volumeBackpack,maximumWeightBackpack)
         print(self.mochila)
         numeroProblema = self.nombreProblema+"_2.lp"
-        self.n = len(self.items)#int(self.hallarN())
+        self.n = int(self.hallarN())
         self.i = len(self.items)
         funcObj = []
         self.primeraRestriccion = []

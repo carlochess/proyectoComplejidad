@@ -42,14 +42,15 @@ class MainController(object):
         from random import randint
         from os import listdir
         from os.path import isfile, join
-        archivos = sorted([ f for f in listdir("DataInput") if isfile(join("DataInput",f)) ])
+        archivos = sorted([ int(f) for f in listdir("DataInput") if isfile(join("DataInput",f)) ])
         if len(archivos) == 0:
             nombre = "0"
         else:
-            nombre = int(archivos[-1])+1
+            nombre = archivos[-1]+1
+        print("Archivos",archivos)
         fileName = "DataInput/"+str(nombre)
         f = open(fileName,'w')
-        nCajas = randint(2,6)
+        nCajas = randint(2,10)
         f.write(str(nCajas)+"\n")
         vMaleta = randint(2,200)
         pMaleta = randint(2,200)

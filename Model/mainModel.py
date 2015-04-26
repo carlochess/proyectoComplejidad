@@ -103,6 +103,7 @@ class MainModel(object):
         return self.solucion is not None
 
     ## Esto deberia estar en la vista, don't kill me pls :(
+    ## Hacerlas por stacks http://matplotlib.org/examples/pylab_examples/bar_stacked.html
     def graficarSolucion(self):
         import numpy as np
         import matplotlib.pyplot as plt
@@ -144,6 +145,6 @@ class MainModel(object):
 
         autolabel(rects1)
         autolabel(rects2)
-
+        ax.plot(kind='barh', stacked=True);
         plt.show()
 #==============================================================================
