@@ -30,7 +30,7 @@ class MainWindow(QMainWindow):
     def initWindow(self):
         self.setWindowTitle(self.tr("Complexity and Optimization"))
         self.setWindowIcon(QIcon("Image/Logo.ico"))
-        self.setMinimumSize(700,550)
+        self.setMinimumSize(600,550)
         self.centerWindow()
 
     def centerWindow(self):
@@ -130,15 +130,18 @@ class MainWindow(QMainWindow):
         self.lineEditOne=QLineEdit()
         self.lineEditOne.setToolTip("Number of Boxes")
         self.lineEditOne.setStatusTip(self.trUtf8("Volume of a backpack."))
+        self.lineEditOne.setAlignment(Qt.AlignRight)
 
         self.lineEditTwo=QLineEdit()
         self.lineEditTwo.setToolTip("Maximum Weight of a Backpack")
         self.lineEditTwo.setStatusTip(self.trUtf8("Maximum weight of a backpack."))
+        self.lineEditTwo.setAlignment(Qt.AlignRight)
 
         self.lineEditThree=QLineEdit()
         self.lineEditThree.setToolTip("Volume of a Backpack")
         self.lineEditThree.setStatusTip(self.trUtf8("Volume of a backpack."))
-
+        self.lineEditThree.setAlignment(Qt.AlignRight)
+	
         self.lineEditFour=QLineEdit()
         self.lineEditFour.setToolTip("Optimum Number of People")
         self.lineEditFour.setStatusTip(self.trUtf8("Optimum number of people."))
