@@ -40,11 +40,12 @@ class MainController(object):
         self.initializeWindow()
 
     def functionRandom(self):
+        import re
         self.ultimaSolucion = -1
         from random import randint
         from os import listdir
         from os.path import isfile, join
-        archivos = sorted([ int(f) for f in listdir("DataInput") if isfile(join("DataInput",f)) ])
+        archivos = sorted([ int(re.sub('[^0-9]','',f)) for f in listdir("DataInput") if isfile(join("DataInput",f)) ])
         if len(archivos) == 0:
             nombre = "0"
         else:
