@@ -99,6 +99,12 @@ class MainController(object):
         ========================================================
         """)
 
+    ''' ================== HILOOOOOOOS ==================
+        solucionador = Solucionador(...)
+        solucionador.problemaResuelto.connect(self.cuandoEsteLaSolucion)
+        solucionador.start()
+    '''
+
     def calculateFirstOptimization(self):
         self.ultimaSolucion = 1
         self.appModel.calculateOptimalNumberPeople()

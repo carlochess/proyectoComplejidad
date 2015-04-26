@@ -8,3 +8,5 @@ Universidad del Valle
 * Hacer gráficos de stacks para mostrar los objetos en una maleta
 * Animar los gráficos
 * Generar un mejor modelo
+* Usar hilos para desplazar la computación de la interfaz gráfica
+* Permitir la edición del caso (agregar mas objetos, guardar el caso, etc)

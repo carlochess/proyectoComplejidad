@@ -16,7 +16,6 @@ class Table(QTableWidget):
         self.data=data
         self.setData()
         self.resizeColumnsToContents()
-        self.horizontalHeader().setResizeMode(QHeaderView.Stretch)
         self.resizeRowsToContents()
 
     def setData(self):
@@ -25,7 +24,6 @@ class Table(QTableWidget):
             horHeaders.append(key)
             for j,item in enumerate(self.data[key]):
                 newitem=QTableWidgetItem(item)
-                #newitem.setTextAlignment(Qt.AlignCenter)
                 self.setItem(j,i,newitem)
         self.setHorizontalHeaderLabels(horHeaders)
 
