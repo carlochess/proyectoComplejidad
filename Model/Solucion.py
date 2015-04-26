@@ -21,8 +21,8 @@ class Solucion:
                 item = self.items[i % numObjetos]
                 mochilaTemp = self.mochilas[int(i / numObjetos)]
                 item.setMochila(int(i / numObjetos))
-                mochilaTemp.addVolumen = item.getVolumen()
-                mochilaTemp.addPeso = item.getPeso()
+                mochilaTemp.addVolumen(item.getVolumen())
+                mochilaTemp.addPeso(item.getPeso())
         self.nombreArchivoSol = str(numProblema)
         self.vectorSolucion = variables
         self.numeroMochilas = numMochilas
@@ -38,11 +38,10 @@ class Solucion:
                 item = self.items[i % numObjetos]
                 mochilaTemp = self.mochilas[int(i / numObjetos)]
                 item.setMochila(int(i / numObjetos))
-                mochilaTemp.addVolumen = item.getVolumen()
-                mochilaTemp.addPeso = item.getPeso()
+                mochilaTemp.addVolumen(item.getVolumen())
+                mochilaTemp.addPeso(item.getPeso())
         self.nombreArchivoSol = str(numProblema)
         self.vectorSolucion = variables
-        #self.MatrizSolucion = matriz
         self.numeroMochilas = numeroMochilas
 
     def getNumeroMochilas(self):
@@ -58,15 +57,15 @@ class Solucion:
     def getItem(self, i):
         return self.items[i]
 
-    def getVolumenesItems(self):
+    def getVolumenesMaletas(self):
         arr = []
-        for item in self.items:
-            arr.append(item.getVolumen())
+        for mochila in self.mochilas:
+            arr.append(mochila.getVolumenContenido())
         return arr
-    def getPesosItems(self):
+    def getPesosMaletas(self):
         arr = []
-        for item in self.items:
-            arr.append(item.getPeso())
+        for mochila in self.mochilas:
+            arr.append(mochila.getPesoContenido())
         return arr
 
     def printMatrix(self,testMatrix):

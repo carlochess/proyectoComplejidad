@@ -25,6 +25,7 @@ class MainController(object):
         self.window.close()
 
     def functionOpenFile(self):
+        self.ultimaSolucion = -1
         directory="DataInput"
         try:
             fileName=QFileDialog.getOpenFileName(self.window,"Abrir archivo",directory)
@@ -39,6 +40,7 @@ class MainController(object):
         self.initializeWindow()
 
     def functionRandom(self):
+        self.ultimaSolucion = -1
         from random import randint
         from os import listdir
         from os.path import isfile, join
@@ -98,14 +100,17 @@ class MainController(object):
         """)
 
     def calculateFirstOptimization(self):
+        self.ultimaSolucion = 1
         self.appModel.calculateOptimalNumberPeople()
         self.window.lineEditFour.setText((str)(self.appModel.getOptimumNumberPeople()))
-        self.asignarItemsaMochilas()
+        self.asignarItemsaMochilas(self.ultimaSolucion)
 
     def calculateSecondOptimization(self):
-        self.appModel.calculateEvenlyNumberPeople()
+        if self.appModel.haySolucionUno() is not None:
+            self.calculateFirstOptimization()
         self.window.lineEditFifth.setText((str)(self.appModel.calculateEvenlyNumberPeople()))
-        self.asignarItemsaMochilas()
+        self.ultimaSolucion = 2
+        self.asignarItemsaMochilas(self.ultimaSolucion)
 
     def createDataTable(self):
         return(dataTable.Table(self.appModel.getDataTable(),self.appModel.getNumberBoxes(),4))
@@ -115,12 +120,18 @@ class MainController(object):
         self.window.lineEditTwo.setText((str)(self.appModel.getMaximumWeightBackpack()))
         self.window.lineEditThree.setText((str)(self.appModel.getVolumeBackpack()))
 
-    def asignarItemsaMochilas(self):
-        self.window.asignarItemsaMochilas(self.appModel.getSolucion())
+    def asignarItemsaMochilas(self, tipo):
+        if tipo == 1:
+            self.window.asignarItemsaMochilas(self.appModel.getSolucionUno())
+        else:
+            self.window.asignarItemsaMochilas(self.appModel.getSolucionDos())
 
     def functionGrafico(self):
-        if not self.appModel.haySolucion():
+        if not self.appModel.haySolucionUno():
             return
-        self.appModel.graficarSolucion()
+        if self.ultimaSolucion == 1:
+            self.appModel.graficarSolucion(self.appModel.getSolucionUno())
+        else:
+            self.appModel.graficarSolucion(self.appModel.getSolucionDos())
 
 #==============================================================================

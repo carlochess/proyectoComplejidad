@@ -15,7 +15,7 @@ class SegundaParteModel:
         self.mochila=Mochila(volumeBackpack,maximumWeightBackpack)
         print(self.mochila)
         numeroProblema = self.nombreProblema+"_2.lp"
-        self.n = int(self.hallarN())
+        self.n = n #int(self.hallarN())
         self.i = len(self.items)
         funcObj = []
         self.primeraRestriccion = []

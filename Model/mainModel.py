@@ -13,6 +13,8 @@ class MainModel(object):
         self.descriptionBoxes=descriptionBoxes
         self.optimumNumberPeople=optimumNumberPeople
         self.solucion = None
+        self.solucionUno = None
+        self.solucionDos = None
 
     def getNumberBoxes(self):
         return(self.numberBoxes)
@@ -86,30 +88,34 @@ class MainModel(object):
     def calculateOptimalNumberPeople(self):
         from .primeraModel import PrimeraParteModel
         self.modeloSolucion = PrimeraParteModel(self.descriptionBoxes,self.volumeBackpack,self.maximumWeightBackpack)
-        self.solucion = self.modeloSolucion.getSolucion()
+        self.solucionUno = self.modeloSolucion.getSolucion()
         self.optimumNumberPeople = self.modeloSolucion.getNumPersonas()
 
     #Esta funcion calcula el numero optimo de personas en este caso seria 10
     def calculateEvenlyNumberPeople(self):
         from .segundaModel import SegundaParteModel
-        self.modeloSolucion = SegundaParteModel(self.descriptionBoxes,self.volumeBackpack,self.maximumWeightBackpack)
-        self.solucion = self.modeloSolucion.getSolucion()
+        n = int(self.solucionUno.getNumeroMochilas())
+        self.modeloSolucion = SegundaParteModel(self.descriptionBoxes,self.volumeBackpack,self.maximumWeightBackpack,n)
+        self.solucionDos = self.modeloSolucion.getSolucion()
         self.optimumNumberPeople = self.modeloSolucion.getNumPersonas()
 
-    def getSolucion(self):
-        return self.solucion
+    def getSolucionUno(self):
+        return self.solucionUno
 
-    def haySolucion(self):
-        return self.solucion is not None
+    def getSolucionDos(self):
+        return self.solucionDos
+
+    def haySolucionUno(self):
+        return self.solucionUno is not None
 
     ## Esto deberia estar en la vista, don't kill me pls :(
     ## Hacerlas por stacks http://matplotlib.org/examples/pylab_examples/bar_stacked.html
-    def graficarSolucion(self):
+    def graficarSolucion(self,solucion):
         import numpy as np
         import matplotlib.pyplot as plt
 
-        listaVolumen = self.solucion.getVolumenesItems()
-        listaPesos = self.solucion.getPesosItems()
+        listaVolumen = solucion.getVolumenesMaletas()
+        listaPesos = solucion.getPesosMaletas()
         N = len(listaVolumen)
         menMeans =listaVolumen
         menStd =   np.arange(N)
@@ -140,8 +146,8 @@ class MainModel(object):
                 ax.text(rect.get_x()+rect.get_width()/2., 1.05*height, '%d'%int(height),
                         ha='center', va='bottom')
 
-        ax.axhline(y=self.solucion.getMochila().getVolumen(),xmin=0,xmax=3,c="blue",linewidth=0.5,zorder=0)
-        ax.axhline(y=self.solucion.getMochila().getPeso(),xmin=0,xmax=3,c="red",linewidth=0.5,zorder=0)
+        ax.axhline(y=solucion.getMochila().getVolumen(),xmin=0,xmax=3,c="blue",linewidth=0.5,zorder=0)
+        ax.axhline(y=solucion.getMochila().getPeso(),xmin=0,xmax=3,c="red",linewidth=0.5,zorder=0)
 
         autolabel(rects1)
         autolabel(rects2)
