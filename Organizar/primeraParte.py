@@ -8,42 +8,29 @@ import sys
 
 def generarRestriccionesTipo(matriz, tipo):
     if tipo == 0 or tipo == 1:
-        for j in range(0, n):
-            restriccionCanecaI = []
-            for k in range(0, i * n):
-                if k >= i * j and k < i * j + i:
-                    objPos = k % i
-                    if tipo == 0:
-                        restriccionCanecaI.append(items[objPos].getPeso())
-                    elif tipo == 1:
-                        restriccionCanecaI.append(items[objPos].getVolumen())
-                else:
-                    restriccionCanecaI.append(0)
+        restriccionCanecaI = []
+        for k in range(0, i * n):
+            objPos = k % i
             if tipo == 0:
-                for k in range(0, n):
-                    if j == k:
-                        restriccionCanecaI.append(-caneca.getPeso())
-                    else:
-                        restriccionCanecaI.append(0)
-                restriccionCanecaI.append("<=")
-                restriccionCanecaI.append(0)
+                restriccionCanecaI.append(items[objPos].getPeso())
             elif tipo == 1:
-                for k in range(0, n):
-                    if j == k:
-                        restriccionCanecaI.append(-caneca.getVolumen())
-                    else:
-                        restriccionCanecaI.append(0)
-                restriccionCanecaI.append("<=")
-                restriccionCanecaI.append(0)
-            matriz.append(restriccionCanecaI)
+                restriccionCanecaI.append(items[objPos].getVolumen())
+        if tipo == 0:
+            restriccionCanecaI.append(-caneca.getPeso())
+        elif tipo == 1:
+            restriccionCanecaI.append(-caneca.getVolumen())
+        restriccionCanecaI.append("<=")
+        restriccionCanecaI.append(0)
+        matriz.append(restriccionCanecaI)
     else:
         for j in range(0, i):
             restriccionCanecaI = []
-            for k in range(0, i * n+n):
+            for k in range(0, i * n):
                 if (k % i) -j == 0 and k < i*n:
                     restriccionCanecaI.append(1)
                 else:
                     restriccionCanecaI.append(0)
+            restriccionCanecaI.append(0)
             restriccionCanecaI.append("=")
             restriccionCanecaI.append(1)
             matriz.append(restriccionCanecaI)
@@ -52,8 +39,7 @@ def generarFuncObj(matriz):
     restriccionCanecaI = []
     for k in range(0, i * n):
         restriccionCanecaI.append(0)
-    for k in range(0, n):
-        restriccionCanecaI.append(1)
+    restriccionCanecaI.append(1)
     matriz.append(restriccionCanecaI)
 
 
@@ -83,7 +69,7 @@ def printMatrix(testMatrix):
     for i in range(len(testMatrix)):
         for j in range(len(testMatrix[i])):
             print(testMatrix[i][j], end=" ")
-        print()
+        print(" : ", len(testMatrix[i]))
     print()
 
 

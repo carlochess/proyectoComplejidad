@@ -56,6 +56,8 @@ class Solucion:
 
     def getItem(self, i):
         return self.items[i]
+    def getItems(self):
+        return self.items
 
     def getVolumenesMaletas(self):
         arr = []

@@ -128,7 +128,7 @@ class MainModel(object):
 
         womenMeans = listaPesos
         womenStd =  np.arange(len(listaPesos))
-        rects2 = ax.bar(ind+width, womenMeans, width, color='y', yerr=womenStd)
+        rects2 = ax.bar(ind+width, womenMeans, width, color='r', yerr=womenStd)
 
         ax.set_ylabel('Valoes')
         ax.set_title('Valores por volumen y peso')
