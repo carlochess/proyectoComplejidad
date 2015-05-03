@@ -109,8 +109,9 @@ class MainController(object):
     def calculateFirstOptimization(self):
         self.ultimaSolucion = 1
         self.appModel.calculateOptimalNumberPeople()
-        self.window.lineEditFour.setText((str)(self.appModel.getOptimumNumberPeople()))
+        '''self.window.lineEditFour.setText((str)(self.appModel.getOptimumNumberPeople()))
         self.asignarItemsaMochilas(self.ultimaSolucion)
+        '''
 
     def calculateSecondOptimization(self):
         if self.appModel.haySolucionUno() is not None:

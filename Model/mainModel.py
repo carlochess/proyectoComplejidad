@@ -88,6 +88,14 @@ class MainModel(object):
     def calculateOptimalNumberPeople(self):
         from .primeraModel import PrimeraParteModel
         self.modeloSolucion = PrimeraParteModel(self.descriptionBoxes,self.volumeBackpack,self.maximumWeightBackpack)
+        self.modeloSolucion.finalizado.connect(self.on_data_ready)
+        '''self.modeloSolucion.begin()
+
+        self.solucionUno = self.modeloSolucion.getSolucion()
+        self.optimumNumberPeople = self.modeloSolucion.getNumPersonas()
+        '''
+    def on_data_ready(self, solucion):
+        print("Termine")
         self.solucionUno = self.modeloSolucion.getSolucion()
         self.optimumNumberPeople = self.modeloSolucion.getNumPersonas()
 

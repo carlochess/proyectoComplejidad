@@ -1,8 +1,12 @@
-# -*- coding: utf-8 -*-
 from __future__ import print_function
-class PrimeraParteModel:
+from PyQt4 import QtCore
 
-    def __init__(self,descriptionBoxes,volumeBackpack,maximumWeightBackpack):
+class PrimeraParteModel(QtCore.QThread):
+    finalizado = QtCore.pyqtSignal(object)
+    def begin(self):
+        self.start()
+    def run(self):
+        # Trabaje
         from .Item import Item
         from .Mochila import Mochila
         from .lpSolv import resolver
@@ -10,6 +14,9 @@ class PrimeraParteModel:
         self.nombreProblema = "1"
         self.items = []
         self.mochila = None
+        descriptionBoxes = self.descriptionBoxes
+        volumeBackpack = self.volumeBackpack
+        maximumWeightBackpack = self.maximumWeightBackpack
         for listaCaja in descriptionBoxes:
             self.items.append(Item(int(listaCaja[1]),int(listaCaja[2])))
         print(self.items)
@@ -17,6 +24,7 @@ class PrimeraParteModel:
         print(self.mochila)
         numeroProblema = self.nombreProblema+"_1.lp"
         self.n = len(self.items)#int(self.hallarN())
+        print("Sebas dice: ", int(self.hallarN()))
         self.i = len(self.items)
         funcObj = []
         self.primeraRestriccion = []
@@ -34,6 +42,17 @@ class PrimeraParteModel:
         for e in self.terceraRestriccion:
             self.matriz.append(e)
         self.solucion = resolver(self.matriz,self.n,self.i,numeroProblema,Solucion(self.mochila,self.items,self.matriz))
+        # Notifique
+        self.finalizado.emit(self.solucion)
+
+    def __init__(self,descriptionBoxes,volumeBackpack,maximumWeightBackpack):
+        QtCore.QThread.__init__(self)
+        self.descriptionBoxes = descriptionBoxes
+        self.volumeBackpack = volumeBackpack
+        self.maximumWeightBackpack = maximumWeightBackpack
+
+    def __del__(self):
+        self.wait()
 
     def setProblemName(self, nombre):
         self.nombreProblema = "0"
